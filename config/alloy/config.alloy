@@ -1,0 +1,130 @@
+logging {
+  level = "debug"
+
+  // Forward internal logs to the local Loki instance.
+  write_to = [loki.process.example.receiver]
+}
+
+otelcol.receiver.otlp "default" {
+  grpc {
+    endpoint = "0.0.0.0:4317"
+  }
+
+  http {
+    endpoint = "0.0.0.0:4318"
+  }
+
+  output {
+    metrics = [otelcol.processor.batch.default.input]
+    logs    = [otelcol.processor.batch.default.input]
+    traces  = [otelcol.processor.batch.default.input]
+  }
+}
+
+otelcol.processor.batch "default" {
+  timeout = "500ms"
+
+  output {
+    metrics = [otelcol.exporter.otlphttp.mimir.input]
+    logs    = [otelcol.exporter.otlphttp.loki.input]
+    traces  = [otelcol.exporter.otlp.tempo.input]
+  }
+}
+
+loki.process "example" {
+   forward_to = [loki.relabel.alloy_logs.receiver]
+
+//    stage.labels {
+//         values = {
+//             version = "1.0.2"
+//         }
+//    }
+}
+
+loki.relabel "alloy_logs"{
+    rule {
+        target_label = "instance"
+        replacement = "itgmania"
+    }
+
+    rule {
+        target_label = "job"
+        replacement = "integrations/self"
+    }
+
+    forward_to = [loki.write.loki.receiver]
+}
+
+tracing {
+	// Write all spans. Don't do this in production!
+	sampling_fraction = 0.10
+
+	// Forward internal spans to the local Tempo instance.
+	write_to = [otelcol.exporter.otlp.tempo.input]
+}
+
+// Collect metrics from the local running Alloy instance and forward to
+// Prometheus.
+prometheus.exporter.self "alloy" {}
+prometheus.scrape "alloy" {
+	targets    = prometheus.exporter.self.alloy.targets
+	forward_to = [prometheus.remote_write.mimir.receiver]
+}
+
+// Collect profiles from the local running Alloy instance and forward to
+// Pyroscope.
+pyroscope.scrape "default" {
+  targets = [
+    {"__address__" = "localhost:12345", "service_name" = "alloy"},
+  ]
+  forward_to = [pyroscope.write.pyroscope.receiver]
+}
+
+prometheus.remote_write "mimir" {
+	endpoint {
+		url = string.format(
+			"http://%s/api/v1/push",
+			coalesce(sys.env("REMOTE_WRITE_HOST"), "localhost:9009"),
+		)
+	}
+}
+
+loki.write "loki" {
+	endpoint {
+		url = string.format(
+			"http://%s/loki/api/v1/push",
+			coalesce(sys.env("LOKI_HOST"), "localhost:3100"),
+		)
+	}
+}
+
+otelcol.exporter.otlphttp "mimir" {
+  client {
+    endpoint = "http://mimir:9009/otlp"
+  }
+}
+
+otelcol.exporter.otlphttp "loki" {
+  client {
+    endpoint = "http://loki:3100/otlp"
+  }
+}
+
+otelcol.exporter.otlp "tempo" {
+	client {
+		endpoint = coalesce(sys.env("TEMPO_HOST"), "localhost:4317")
+
+		tls {
+			insecure = true
+		}
+	}
+}
+
+pyroscope.write "pyroscope" {
+	endpoint {
+		url = string.format(
+			"http://%s",
+			coalesce(sys.env("PYROSCOPE_HOST"), "localhost:4040"),
+		)
+	}
+}
