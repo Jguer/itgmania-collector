@@ -1,20 +1,29 @@
+# ITG Mania Collector
+
+This collector group was created for [my fork of itgmania](https://github.com/jguer/itgmania) with the purpose of collecting data from the game using [OpenTelemetry](https://opentelemetry.io/) and sending it to a  LGTM (Loki, Grafana, Tempo, Mimir) observability stack.
+
+# Why
+
+As a big fan of rhythm games, I wanted to explore the real-time applications of modern observability tools. What better way to learn the intricacies of OpenTelemetry and the LGTM stack (Loki, Grafana, Tempo, Mimir) than by applying them to the fast-paced data stream of a game like ITGMania? This project serves as both a learning exercise and a practical demonstration of instrumenting a C++ application for detailed telemetry.
+
 # Docker Compose
 
-This directory contains a Docker Compose environment that can be used to test
-Grafana Alloy.
+This directory contains a Docker Compose environment that can be used to test instrumented ITGMania.
 
-* Grafana, for visualizing telemetry (`localhost:3000`)
-* Grafana Mimir, for storing metrics (`localhost:9009`)
-* Grafana Loki, for storing logs (`localhost:3100`)
-* Grafana Tempo, for storing traces (`localhost:3200`)
-* Grafana Pyroscope, for storing profiles (`localhost:4040`)
+## Services
+* Grafana: for visualizing telemetry (`localhost:3000`)
+* Grafana Mimir: for storing metrics (`localhost:9009`)
+* Grafana Loki: for storing logs (`localhost:3100`)
+* Grafana Tempo: for storing traces (`localhost:3200`)
+* Grafana Pyroscope: for storing profiles (`localhost:4040`)
+* Grafana Alloy: Acts as an OpenTelemetry collector and sends self-monitoring data to the stack (`localhost:4317` for grpc, `localhost:4318` for http OTEL collector)
 
-Grafana is automatically provisioned with the appropriate datasources
+Grafana is automatically provisioned with the appropriate datasources.
 
 To start the environment, run:
 
 ```bash
-docker compose up --build -d
+docker compose up -d
 ```
 
 To stop the environment, run:
@@ -23,27 +32,10 @@ To stop the environment, run:
 docker compose down
 ```
 
-## Running Alloy
-
-Alloy can either be run locally or within Docker Compose. The [example
-configuration](./config/alloy/config.alloy) can be used to send self-monitoring
-data from a local Alloy to the various databases running in Docker Compose.
-
-To run Alloy within Docker Compose, pass `--profile=alloy` to `docker compose`
-when starting and stopping the environment:
-
-```bash
-docker compose up -d
-```
-
-```bash
-docker compose down
-```
-
 ## Visualizing
 
-To visualize Alloy data in Grafana, open <http://localhost:3000> in a web
-browser and look at the dashboards in the `Alloy` folder.
+To visualize ITG Mania data in Grafana, open <http://localhost:3000> in a web
+browser and look at the 'MMR' dashboard.
 
-> **NOTE**: It can take up to a minute for Alloy metrics and profiles to start
+> **NOTE**: It can take up to a minute for ITG Mania metrics and profiles to start
 > appearing.
