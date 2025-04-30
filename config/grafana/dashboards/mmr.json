@@ -1077,8 +1077,8 @@
     "list": [
       {
         "current": {
-          "text": "Goin' Under",
-          "value": "Goin' Under"
+          "text": "All I Want For Christmas",
+          "value": "All I Want For Christmas"
         },
         "datasource": {
           "type": "prometheus",
@@ -1100,8 +1100,8 @@
       },
       {
         "current": {
-          "text": "Challenge",
-          "value": "Challenge"
+          "text": "Beginner",
+          "value": "Beginner"
         },
         "datasource": {
           "type": "prometheus",
@@ -1122,8 +1122,8 @@
       },
       {
         "current": {
-          "text": "10",
-          "value": "10"
+          "text": "2",
+          "value": "2"
         },
         "datasource": {
           "type": "prometheus",
@@ -1141,23 +1141,6 @@
         "refresh": 2,
         "regex": "/.*meter=\"([^\"]*)\".*/",
         "type": "query"
-      },
-      {
-        "current": {
-          "text": "Goin' Under",
-          "value": "Goin' Under"
-        },
-        "description": "",
-        "name": "test_quote",
-        "options": [
-          {
-            "selected": true,
-            "text": "Goin' Under",
-            "value": "Goin' Under"
-          }
-        ],
-        "query": "Goin' Under",
-        "type": "custom"
       }
     ]
   },
@@ -1169,5 +1152,5 @@
   "timezone": "browser",
   "title": "MMR",
   "uid": "eej2ii75ph81sc",
-  "version": 45
+  "version": 47
 }
