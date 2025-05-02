@@ -22,7 +22,8 @@ otelcol.receiver.otlp "default" {
 }
 
 otelcol.processor.batch "default" {
-  timeout = "500ms"
+  timeout = "10ms"
+  // send_batch_max_size = 5
 
   output {
     metrics = [otelcol.exporter.otlphttp.mimir.input]
@@ -56,7 +57,6 @@ loki.relabel "alloy_logs"{
 }
 
 tracing {
-	// Write all spans. Don't do this in production!
 	sampling_fraction = 0.10
 
 	// Forward internal spans to the local Tempo instance.
