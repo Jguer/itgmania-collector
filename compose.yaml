@@ -6,7 +6,7 @@ include:
 
 services:
   alloy:
-    image: grafana/alloy:v1.5.1
+    image: grafana/alloy:v1.12.1
     pull_policy: always
     restart: on-failure
     volumes:
@@ -16,6 +16,9 @@ services:
       LOKI_HOST: loki:3100
       TEMPO_HOST: tempo:4317
       PYROSCOPE_HOST: pyroscope:4040
+      GRAFANA_CLOUD_OTLP_ENDPOINT: https://otlp-gateway-dev-us-central-0.grafana-dev.net/otlp
+      GRAFANA_CLOUD_OTLP_USERNAME: ${GRAFANA_CLOUD_OTLP_USERNAME:-}
+      GRAFANA_CLOUD_OTLP_API_TOKEN: ${GRAFANA_CLOUD_OTLP_API_TOKEN:-}
     depends_on:
       - mimir
       - loki

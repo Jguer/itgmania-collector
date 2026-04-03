@@ -20,6 +20,11 @@ This directory contains a Docker Compose environment that can be used to test in
 
 Grafana is automatically provisioned with the appropriate datasources.
 
+OTLP traffic received by Alloy can also be forwarded to Grafana Cloud. Set
+`GRAFANA_CLOUD_OTLP_API_TOKEN` in your shell or compose environment before
+starting the stack. The compose file already includes your cloud OTLP endpoint
+and stack instance ID.
+
 To start the environment, run:
 
 ```bash

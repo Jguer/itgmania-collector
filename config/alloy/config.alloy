@@ -25,9 +25,18 @@ otelcol.processor.batch "default" {
   timeout = "500ms"
 
   output {
-    metrics = [otelcol.exporter.otlphttp.mimir.input]
-    logs    = [otelcol.exporter.otlphttp.loki.input]
-    traces  = [otelcol.exporter.otlp.tempo.input]
+    metrics = [
+      otelcol.exporter.otlphttp.mimir.input,
+      otelcol.exporter.otlphttp.grafana_cloud.input,
+    ]
+    logs = [
+      otelcol.exporter.otlphttp.loki.input,
+      otelcol.exporter.otlphttp.grafana_cloud.input,
+    ]
+    traces = [
+      otelcol.exporter.otlp.tempo.input,
+      otelcol.exporter.otlphttp.grafana_cloud.input,
+    ]
   }
 }
 
@@ -107,6 +116,21 @@ otelcol.exporter.otlphttp "mimir" {
 otelcol.exporter.otlphttp "loki" {
   client {
     endpoint = "http://loki:3100/otlp"
+  }
+}
+
+otelcol.auth.basic "grafana_cloud_otlp" {
+  username = coalesce(sys.env("GRAFANA_CLOUD_OTLP_USERNAME"), "4522")
+  password = sys.env("GRAFANA_CLOUD_OTLP_API_TOKEN")
+}
+
+otelcol.exporter.otlphttp "grafana_cloud" {
+  client {
+    endpoint = coalesce(
+      sys.env("GRAFANA_CLOUD_OTLP_ENDPOINT"),
+      "https://otlp-gateway-dev-us-central-0.grafana-dev.net/otlp",
+    )
+    auth = otelcol.auth.basic.grafana_cloud_otlp.handler
   }
 }
 

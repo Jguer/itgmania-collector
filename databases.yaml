@@ -1,6 +1,6 @@
 services:
   mimir:
-    image: grafana/mimir:2.14.3
+    image: grafana/mimir:2.17.3
     restart: on-failure
     command:
       - -config.file=/etc/mimir-config/mimir.yaml
@@ -10,26 +10,24 @@ services:
       - "9009:9009"
 
   loki:
-    image: grafana/loki:3.4.1
+    image: grafana/loki:3.6.2
     restart: on-failure
     ports:
       - "3100:3100"
 
   tempo:
-    image: grafana/tempo:2.6.1
+    image: grafana/tempo:2.10.3
     restart: on-failure
     command:
-      - "-storage.trace.backend=local"                  # tell tempo where to permanently put traces
-      - "-storage.trace.local.path=/tmp/tempo/traces"
-      - "-storage.trace.wal.path=/tmp/tempo/wal"        # tell tempo where to store the wal
-      - "-auth.enabled=false"                           # disables the requirement for the X-Scope-OrgID header
-      - "-server.http-listen-port=3200"
+      - "-config.file=/etc/tempo-config/tempo.yaml"
+    volumes:
+      - ./config/tempo:/etc/tempo-config
     ports:
       - "3200:3200"
       # - "4317:4317"
 
   pyroscope:
-    image: grafana/pyroscope:1.5.0
+    image: grafana/pyroscope:1.19.1
     restart: on-failure
     ports:
       - "4040:4040"
