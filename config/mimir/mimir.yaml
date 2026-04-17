@@ -61,3 +61,4 @@ ruler_storage:
 limits:
   ingestion_burst_size: 500000
   ingestion_rate: 250000
+  otel_metric_suffixes_enabled: true

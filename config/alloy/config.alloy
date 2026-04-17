@@ -22,7 +22,9 @@ otelcol.receiver.otlp "default" {
 }
 
 otelcol.processor.batch "default" {
-  timeout = "500ms"
+  timeout = "250ms"
+  send_batch_size = 512
+  send_batch_max_size = 2048
 
   output {
     metrics = [

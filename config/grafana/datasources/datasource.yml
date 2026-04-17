@@ -13,9 +13,11 @@ datasources:
   isDefault: false
   version: 1
   editable: true
+  uid: mimir
   jsonData:
-    # The recommended scrape interval is 60s.
-    timeInterval: '60s'
+    # Low-latency pipeline: match the game's 500ms OTLP export cadence so
+    # $__rate_interval can resolve to a short window instead of the 60s default.
+    timeInterval: '1s'
 - name: Loki
   type: loki
   access: proxy
