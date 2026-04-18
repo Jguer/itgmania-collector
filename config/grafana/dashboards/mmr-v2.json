@@ -4,19 +4,25 @@
   "metadata": {
     "name": "ad9zxq5",
     "namespace": "default",
-    "uid": "2dbea096-88e7-4834-a72d-2760e302322f",
-    "resourceVersion": "1776444282906013",
-    "generation": 13,
-    "creationTimestamp": "2026-04-17T09:02:30Z",
+    "uid": "9a805518-ea0f-4f79-b247-c81f30cb0c39",
+    "resourceVersion": "1776536144081984",
+    "generation": 17,
+    "creationTimestamp": "2026-04-18T15:58:16Z",
     "labels": {
-      "grafana.app/deprecatedInternalID": "431124457988096"
+      "grafana.app/deprecatedInternalID": "898140063518720"
     },
     "annotations": {
-      "grafana.app/createdBy": "anonymous:0",
-      "grafana.app/message": "Fix multi-song overlap: stat/gauge panels use instant queries; timeseries use `@ end()` to pin current_song_info filter to query end, so only the currently-active song is shown across the window",
-      "grafana.app/updatedBy": "service-account:ffjcj7er3yby8b",
-      "grafana.app/updatedTimestamp": "2026-04-17T16:44:42Z",
-      "grafana.app/folder": ""
+      "grafana.app/createdBy": "access-policy:service",
+      "grafana.app/folder": "",
+      "grafana.app/managedBy": "classic-file-provisioning",
+      "grafana.app/managerAllowsEdits": "true",
+      "grafana.app/managerId": "mmr provisioner",
+      "grafana.app/saved-from-ui": "Grafana v13.0.1 (a100054f)",
+      "grafana.app/sourceChecksum": "65c92b76f94e8b4e9c6b542cc2c67574",
+      "grafana.app/sourcePath": "/var/lib/grafana/dashboards/mmr-v2.json",
+      "grafana.app/sourceTimestamp": "1776535830000",
+      "grafana.app/updatedBy": "anonymous:0",
+      "grafana.app/updatedTimestamp": "2026-04-18T18:15:44Z"
     }
   },
   "spec": {
@@ -37,10 +43,7 @@
           "hide": true,
           "iconColor": "rgba(0, 211, 255, 1)",
           "name": "Annotations & Alerts",
-          "builtIn": true,
-          "legacyOptions": {
-            "type": "dashboard"
-          }
+          "builtIn": true
         }
       }
     ],
@@ -90,40 +93,43 @@
                         "Time": true,
                         "Value": true,
                         "__name__": true,
+                        "bpm_max": true,
+                        "bpm_min": true,
+                        "chart_credit": true,
                         "instance": true,
                         "job": true,
-                        "player_number": false,
+                        "player_number": true,
                         "service_instance_id": true,
                         "service_name": true,
+                        "song_length_seconds": true,
                         "telemetry_sdk_language": true,
                         "telemetry_sdk_name": true,
                         "telemetry_sdk_version": true
                       },
                       "indexByName": {
-                        "bpm_max": 7,
-                        "bpm_min": 6,
-                        "chart_credit": 9,
                         "difficulty": 3,
                         "meter": 4,
                         "song_artist": 1,
                         "song_group": 2,
-                        "song_length_seconds": 8,
                         "song_title": 0,
                         "steps_type": 5
                       },
                       "renameByName": {
-                        "bpm_max": "BPM max",
-                        "bpm_min": "BPM min",
-                        "chart_credit": "Chart credit",
                         "difficulty": "Difficulty",
                         "meter": "Meter",
                         "song_artist": "Artist",
                         "song_group": "Pack",
-                        "song_length_seconds": "Length (s)",
-                        "song_title": "Title",
-                        "steps_type": "Steps Type"
+                        "song_title": " ",
+                        "steps_type": "Steps"
                       }
                     }
+                  }
+                },
+                {
+                  "kind": "Transformation",
+                  "group": "transpose",
+                  "spec": {
+                    "options": {}
                   }
                 }
               ],
@@ -146,7 +152,7 @@
                     "steps": [
                       {
                         "value": 0,
-                        "color": "green"
+                        "color": "text"
                       }
                     ]
                   },
@@ -156,7 +162,8 @@
                   "custom": {
                     "align": "left",
                     "cellOptions": {
-                      "type": "auto"
+                      "type": "auto",
+                      "wrapText": true
                     },
                     "footer": {
                       "reducers": []
@@ -164,7 +171,28 @@
                     "inspect": false
                   }
                 },
-                "overrides": []
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Field"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 140
+                      },
+                      {
+                        "id": "custom.align",
+                        "value": "right"
+                      },
+                      {
+                        "id": "displayName",
+                        "value": " "
+                      }
+                    ]
+                  }
+                ]
               }
             }
           }
@@ -1130,7 +1158,7 @@
         "spec": {
           "id": 211,
           "title": "✨ Judgement Breakdown (session)",
-          "description": "Tap-note outcomes over the selected time range.",
+          "description": "Tap-note outcomes over the selected time range, using the itg-theme-mmr judgement names (Superb / Perfect / Great / Good / Bad / Miss).",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -1147,7 +1175,8 @@
                         "name": "Mimir"
                       },
                       "spec": {
-                        "expr": "sum by (judgment) (increase(itgmania_note_hits_count_total{player_number=~\"$player\",instance=~\"$instance\",judgment!~\"mine_.*|checkpoint_.*\"}[$__range]))"
+                        "expr": "label_replace(label_replace(label_replace(label_replace(label_replace(label_replace(sum by (judgment) (increase(itgmania_note_hits_count_total{player_number=~\"$player\",instance=~\"$instance\",judgment!~\"mine_.*|checkpoint_.*\"}[$__range])), \"judgment\", \"Superb\", \"judgment\", \"w1\"), \"judgment\", \"Perfect\", \"judgment\", \"w2\"), \"judgment\", \"Great\", \"judgment\", \"w3\"), \"judgment\", \"Good\", \"judgment\", \"w4\"), \"judgment\", \"Bad\", \"judgment\", \"w5\"), \"judgment\", \"Miss\", \"judgment\", \"miss\")",
+                        "legendFormat": "{{judgment}}"
                       }
                     },
                     "refId": "A",
@@ -1240,7 +1269,7 @@
         "spec": {
           "id": 212,
           "title": "🎦 Live Judgements (current song)",
-          "description": "Per-judgment counts accumulating in real time.",
+          "description": "Per-judgement counts accumulating in real time (itg-theme-mmr names: Superb / Perfect / Great / Good / Bad / Miss).",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -1257,8 +1286,8 @@
                         "name": "Mimir"
                       },
                       "spec": {
-                        "expr": "itgmania_current_song_note_hits_count{player_number=~\"$player\",instance=~\"$instance\"} and on (instance, player_number, song_title, song_group, difficulty, meter, steps_type) (itgmania_current_song_info @ end() == 1)",
-                        "legendFormat": "{{tns}} P{{player_number}}"
+                        "expr": "label_replace(label_replace(label_replace(label_replace(label_replace(label_replace(itgmania_current_song_note_hits_count{player_number=~\"$player\",instance=~\"$instance\",judgment!~\"mine_.*|checkpoint_.*\"} and on (instance, player_number, song_title, song_group, difficulty, meter, steps_type) (itgmania_current_song_info @ end() == 1), \"judgment\", \"Superb\", \"judgment\", \"w1\"), \"judgment\", \"Perfect\", \"judgment\", \"w2\"), \"judgment\", \"Great\", \"judgment\", \"w3\"), \"judgment\", \"Good\", \"judgment\", \"w4\"), \"judgment\", \"Bad\", \"judgment\", \"w5\"), \"judgment\", \"Miss\", \"judgment\", \"miss\")",
+                        "legendFormat": "{{judgment}} P{{player_number}}"
                       }
                     },
                     "refId": "A",
@@ -1357,7 +1386,7 @@
         "spec": {
           "id": 213,
           "title": "⏱️ Note Timing Heatmap (|ms|)",
-          "description": "Distribution of absolute distance from the beat (early + late combined). Hot low-ms rows = precise tapping. Use the Timing Bias panel, or filter by `hit_direction` (early/late), to see asymmetry.",
+          "description": "How far (in milliseconds) your hits land from the beat, regardless of early or late.\n\nHow to read it:\n- X axis = time, Y axis = how far from the beat in ms (0 = perfectly on beat).\n- Each column is one time slice; brighter cells = more hits in that ms band.\n- A column concentrated near the bottom = lots of tight, on-beat hits. Bright cells drifting up = looser timing.\n- Early vs late is combined here — use the Timing Bias panel below to see if you tend to hit early or late.\n- The heatmap shows only finite histogram buckets, with denser bucket edges in the sub-250ms range and a tail for larger outliers.",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -1374,9 +1403,11 @@
                         "name": "Mimir"
                       },
                       "spec": {
-                        "expr": "sum by (le) (increase(itgmania_note_hit_offset_ms_milliseconds_bucket{player_number=~\"$player\",instance=~\"$instance\"}[$__rate_interval]))",
+                        "editorMode": "code",
+                        "expr": "sum by (le) (increase(itgmania_note_hit_offset_ms_milliseconds_bucket{player_number=~\"$player\",instance=~\"$instance\",le!=\"+Inf\"}[$__rate_interval]))",
                         "format": "heatmap",
-                        "legendFormat": "{{le}}"
+                        "legendFormat": "{{le}}",
+                        "range": true
                       }
                     },
                     "refId": "A",
@@ -1391,7 +1422,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "heatmap",
-            "version": "13.1.0-24496757627",
+            "version": "13.0.1",
             "spec": {
               "options": {
                 "annotations": {
@@ -1409,7 +1440,7 @@
                   "mode": "scheme",
                   "reverse": false,
                   "scale": "exponential",
-                  "scheme": "Spectral",
+                  "scheme": "Oranges",
                   "steps": 64
                 },
                 "exemplars": {
@@ -1422,14 +1453,15 @@
                   "show": true
                 },
                 "rowsFrame": {
-                  "layout": "auto"
+                  "layout": "unknown"
                 },
                 "tooltip": {
                   "mode": "single",
-                  "showColorScale": false,
+                  "showColorScale": true,
                   "yHistogram": false
                 },
                 "yAxis": {
+                  "axisLabel": "|ms| from beat",
                   "axisPlacement": "left",
                   "reverse": false,
                   "unit": "ms"
@@ -1511,7 +1543,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "timeseries",
-            "version": "13.1.0-24496757627",
+            "version": "13.0.1",
             "spec": {
               "options": {
                 "annotations": {
@@ -1627,7 +1659,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "barchart",
-            "version": "13.1.0-24496757627",
+            "version": "13.0.1",
             "spec": {
               "options": {
                 "barRadius": 0,
@@ -1737,7 +1769,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "barchart",
-            "version": "13.1.0-24496757627",
+            "version": "13.0.1",
             "spec": {
               "options": {
                 "barRadius": 0,
@@ -1814,8 +1846,8 @@
         "kind": "Panel",
         "spec": {
           "id": 217,
-          "title": "🌟 Fantastic vs Miss Rate (%)",
-          "description": "Higher Fantastic, lower Miss = better.",
+          "title": "🌟 Superb vs Miss Rate (%)",
+          "description": "Higher Superb, lower Miss = better.",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -1833,7 +1865,7 @@
                       },
                       "spec": {
                         "expr": "sum(rate(itgmania_note_hits_count_total{judgment=\"w1\",player_number=~\"$player\",instance=~\"$instance\"}[$__rate_interval])) / clamp_min(sum(rate(itgmania_note_hits_count_total{player_number=~\"$player\",instance=~\"$instance\",judgment!~\"mine_.*|checkpoint_.*\"}[$__rate_interval])), 0.001) * 100",
-                        "legendFormat": "Fantastic %"
+                        "legendFormat": "Superb %"
                       }
                     },
                     "refId": "A",
@@ -1867,7 +1899,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "timeseries",
-            "version": "13.1.0-24496757627",
+            "version": "13.0.1",
             "spec": {
               "options": {
                 "annotations": {
@@ -2633,7 +2665,7 @@
         "spec": {
           "id": 308,
           "title": "🔥 Top Played Songs",
-          "description": "Songs with the most plays over the time range.",
+          "description": "Ranked list of the most-played songs within the selected time range. The Plays column counts each completed song/stage play.",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -2650,7 +2682,10 @@
                         "name": "Mimir"
                       },
                       "spec": {
-                        "expr": "topk(8, sum by (song_title) (itgmania_song_plays_count_total{instance=~\"$instance\"}))"
+                        "expr": "topk(8, round(sum by (song_title) (increase(itgmania_song_plays_count_total{instance=~\"$instance\"}[$__range]))))",
+                        "format": "table",
+                        "instant": true,
+                        "range": false
                       }
                     },
                     "refId": "A",
@@ -2658,38 +2693,61 @@
                   }
                 }
               ],
-              "transformations": [],
+              "transformations": [
+                {
+                  "kind": "Transformation",
+                  "group": "organize",
+                  "spec": {
+                    "options": {
+                      "excludeByName": {
+                        "Time": true
+                      },
+                      "indexByName": {
+                        "Value": 1,
+                        "song_title": 0
+                      },
+                      "renameByName": {
+                        "Value": "Plays",
+                        "song_title": "Song"
+                      }
+                    }
+                  }
+                },
+                {
+                  "kind": "Transformation",
+                  "group": "sortBy",
+                  "spec": {
+                    "options": {
+                      "fields": {},
+                      "sort": [
+                        {
+                          "desc": true,
+                          "field": "Plays"
+                        }
+                      ]
+                    }
+                  }
+                }
+              ],
               "queryOptions": {}
             }
           },
           "vizConfig": {
             "kind": "VizConfig",
-            "group": "barchart",
+            "group": "table",
             "version": "13.1.0-24496757627",
             "spec": {
               "options": {
-                "barRadius": 0,
-                "barWidth": 0.9,
-                "fullHighlight": false,
-                "groupWidth": 0.7,
-                "legend": {
-                  "calcs": [
+                "cellHeight": "sm",
+                "footer": {
+                  "countRows": false,
+                  "fields": "",
+                  "reducer": [
                     "sum"
                   ],
-                  "displayMode": "table",
-                  "placement": "right",
-                  "showLegend": true
+                  "show": false
                 },
-                "orientation": "horizontal",
-                "showValue": "auto",
-                "stacking": "none",
-                "tooltip": {
-                  "hideZeros": false,
-                  "mode": "multi",
-                  "sort": "desc"
-                },
-                "xTickLabelRotation": 0,
-                "xTickLabelSpacing": 0
+                "showHeader": true
               },
               "fieldConfig": {
                 "defaults": {
@@ -2700,39 +2758,59 @@
                       {
                         "value": 0,
                         "color": "green"
-                      },
-                      {
-                        "value": 80,
-                        "color": "red"
                       }
                     ]
                   },
                   "color": {
-                    "mode": "palette-classic"
+                    "mode": "thresholds"
                   },
                   "custom": {
-                    "axisBorderShow": false,
-                    "axisCenteredZero": false,
-                    "axisColorMode": "text",
-                    "axisLabel": "",
-                    "axisPlacement": "auto",
-                    "fillOpacity": 80,
-                    "gradientMode": "none",
-                    "hideFrom": {
-                      "legend": false,
-                      "tooltip": false,
-                      "viz": false
+                    "align": "auto",
+                    "cellOptions": {
+                      "type": "auto"
                     },
-                    "lineWidth": 1,
-                    "scaleDistribution": {
-                      "type": "linear"
-                    },
-                    "thresholdsStyle": {
-                      "mode": "off"
-                    }
+                    "filterable": false,
+                    "inspect": false
                   }
                 },
-                "overrides": []
+                "overrides": [
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Plays"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.width",
+                        "value": 90
+                      },
+                      {
+                        "id": "custom.align",
+                        "value": "right"
+                      },
+                      {
+                        "id": "custom.cellOptions",
+                        "value": {
+                          "mode": "gradient",
+                          "type": "gauge",
+                          "valueDisplayMode": "text"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "matcher": {
+                      "id": "byName",
+                      "options": "Song"
+                    },
+                    "properties": [
+                      {
+                        "id": "custom.align",
+                        "value": "left"
+                      }
+                    ]
+                  }
+                ]
               }
             }
           }
@@ -2743,7 +2821,7 @@
         "spec": {
           "id": 309,
           "title": "✨ Global Judgement Breakdown",
-          "description": "Every tap-note judgment across all plays in the range.",
+          "description": "Every tap-note judgement across all plays in the range, using the itg-theme-mmr judgement names (Superb / Perfect / Great / Good / Bad / Miss).",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -2760,7 +2838,8 @@
                         "name": "Mimir"
                       },
                       "spec": {
-                        "expr": "sum by (judgment) (increase(itgmania_note_hits_count_total{instance=~\"$instance\",judgment!~\"mine_.*|checkpoint_.*\"}[$__range]))"
+                        "expr": "label_replace(label_replace(label_replace(label_replace(label_replace(label_replace(sum by (judgment) (increase(itgmania_note_hits_count_total{instance=~\"$instance\",judgment!~\"mine_.*|checkpoint_.*\"}[$__range])), \"judgment\", \"Superb\", \"judgment\", \"w1\"), \"judgment\", \"Perfect\", \"judgment\", \"w2\"), \"judgment\", \"Great\", \"judgment\", \"w3\"), \"judgment\", \"Good\", \"judgment\", \"w4\"), \"judgment\", \"Bad\", \"judgment\", \"w5\"), \"judgment\", \"Miss\", \"judgment\", \"miss\")",
+                        "legendFormat": "{{judgment}}"
                       }
                     },
                     "refId": "A",
@@ -3947,14 +4026,13 @@
       }
     },
     "layout": {
-      "kind": "RowsLayout",
+      "kind": "TabsLayout",
       "spec": {
-        "rows": [
+        "tabs": [
           {
-            "kind": "RowsLayoutRow",
+            "kind": "TabsLayoutTab",
             "spec": {
               "title": "🎵 Current Song",
-              "collapse": false,
               "layout": {
                 "kind": "GridLayout",
                 "spec": {
@@ -3964,8 +4042,8 @@
                       "spec": {
                         "x": 0,
                         "y": 0,
-                        "width": 12,
-                        "height": 6,
+                        "width": 16,
+                        "height": 7,
                         "element": {
                           "kind": "ElementReference",
                           "name": "panel-201"
@@ -3975,47 +4053,8 @@
                     {
                       "kind": "GridLayoutItem",
                       "spec": {
-                        "x": 12,
+                        "x": 16,
                         "y": 0,
-                        "width": 6,
-                        "height": 6,
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-202"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "x": 18,
-                        "y": 0,
-                        "width": 3,
-                        "height": 6,
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-203"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "x": 21,
-                        "y": 0,
-                        "width": 3,
-                        "height": 6,
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-204"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "x": 0,
-                        "y": 6,
                         "width": 8,
                         "height": 7,
                         "element": {
@@ -4027,36 +4066,10 @@
                     {
                       "kind": "GridLayoutItem",
                       "spec": {
-                        "x": 8,
-                        "y": 6,
-                        "width": 8,
-                        "height": 7,
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-206"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "x": 16,
-                        "y": 6,
-                        "width": 8,
-                        "height": 7,
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-207"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
                         "x": 0,
-                        "y": 13,
+                        "y": 7,
                         "width": 8,
-                        "height": 8,
+                        "height": 6,
                         "element": {
                           "kind": "ElementReference",
                           "name": "panel-208"
@@ -4067,6 +4080,45 @@
                       "kind": "GridLayoutItem",
                       "spec": {
                         "x": 8,
+                        "y": 7,
+                        "width": 5,
+                        "height": 6,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-204"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 13,
+                        "y": 7,
+                        "width": 6,
+                        "height": 6,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-202"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 19,
+                        "y": 7,
+                        "width": 5,
+                        "height": 6,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-203"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 0,
                         "y": 13,
                         "width": 8,
                         "height": 8,
@@ -4079,13 +4131,26 @@
                     {
                       "kind": "GridLayoutItem",
                       "spec": {
+                        "x": 8,
+                        "y": 13,
+                        "width": 8,
+                        "height": 8,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-206"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
                         "x": 16,
                         "y": 13,
                         "width": 8,
                         "height": 8,
                         "element": {
                           "kind": "ElementReference",
-                          "name": "panel-210"
+                          "name": "panel-207"
                         }
                       }
                     },
@@ -4107,6 +4172,19 @@
                       "spec": {
                         "x": 12,
                         "y": 21,
+                        "width": 8,
+                        "height": 8,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-210"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 0,
+                        "y": 29,
                         "width": 12,
                         "height": 8,
                         "element": {
@@ -4118,20 +4196,7 @@
                     {
                       "kind": "GridLayoutItem",
                       "spec": {
-                        "x": 0,
-                        "y": 29,
-                        "width": 16,
-                        "height": 8,
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-213"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "x": 16,
+                        "x": 12,
                         "y": 29,
                         "width": 8,
                         "height": 8,
@@ -4146,24 +4211,11 @@
                       "spec": {
                         "x": 0,
                         "y": 37,
-                        "width": 8,
-                        "height": 7,
+                        "width": 16,
+                        "height": 8,
                         "element": {
                           "kind": "ElementReference",
-                          "name": "panel-215"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "x": 8,
-                        "y": 37,
-                        "width": 8,
-                        "height": 7,
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-216"
+                          "name": "panel-213"
                         }
                       }
                     },
@@ -4179,6 +4231,32 @@
                           "name": "panel-217"
                         }
                       }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 0,
+                        "y": 45,
+                        "width": 8,
+                        "height": 7,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-215"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 8,
+                        "y": 45,
+                        "width": 8,
+                        "height": 7,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-216"
+                        }
+                      }
                     }
                   ]
                 }
@@ -4186,10 +4264,9 @@
             }
           },
           {
-            "kind": "RowsLayoutRow",
+            "kind": "TabsLayoutTab",
             "spec": {
               "title": "🌐 Global Stats",
-              "collapse": false,
               "layout": {
                 "kind": "GridLayout",
                 "spec": {
@@ -4330,10 +4407,9 @@
             }
           },
           {
-            "kind": "RowsLayoutRow",
+            "kind": "TabsLayoutTab",
             "spec": {
               "title": "🏆 Leaderboard (song_play traces)",
-              "collapse": false,
               "layout": {
                 "kind": "GridLayout",
                 "spec": {
@@ -4370,10 +4446,9 @@
             }
           },
           {
-            "kind": "RowsLayoutRow",
+            "kind": "TabsLayoutTab",
             "spec": {
               "title": "⚙️ Engine & System Health",
-              "collapse": false,
               "layout": {
                 "kind": "GridLayout",
                 "spec": {
@@ -4491,7 +4566,7 @@
       }
     },
     "links": [],
-    "liveNow": false,
+    "liveNow": true,
     "preload": false,
     "tags": [],
     "timeSettings": {
@@ -4502,14 +4577,7 @@
       "autoRefreshIntervals": [
         "5s",
         "10s",
-        "30s",
-        "1m",
-        "5m",
-        "15m",
-        "30m",
-        "1h",
-        "2h",
-        "1d"
+        "30s"
       ],
       "hideTimepicker": false,
       "fiscalYearStartMonth": 0
@@ -4630,6 +4698,17 @@
           "allowCustomValue": true
         }
       }
-    ]
+    ],
+    "preferences": {
+      "layout": {
+        "kind": "AutoGridLayout",
+        "spec": {
+          "maxColumnCount": 3,
+          "columnWidthMode": "standard",
+          "rowHeightMode": "standard",
+          "items": []
+        }
+      }
+    }
   }
 }
