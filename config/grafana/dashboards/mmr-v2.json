@@ -4,12 +4,12 @@
   "metadata": {
     "name": "ad9zxq5",
     "namespace": "default",
-    "uid": "9a805518-ea0f-4f79-b247-c81f30cb0c39",
-    "resourceVersion": "1776536144081984",
-    "generation": 17,
-    "creationTimestamp": "2026-04-18T15:58:16Z",
+    "uid": "43041f35-5c7b-490d-bd6d-89e41c4170c3",
+    "resourceVersion": "1776537555136008",
+    "generation": 6,
+    "creationTimestamp": "2026-04-18T18:18:09Z",
     "labels": {
-      "grafana.app/deprecatedInternalID": "898140063518720"
+      "grafana.app/deprecatedInternalID": "919869745909760"
     },
     "annotations": {
       "grafana.app/createdBy": "access-policy:service",
@@ -18,11 +18,11 @@
       "grafana.app/managerAllowsEdits": "true",
       "grafana.app/managerId": "mmr provisioner",
       "grafana.app/saved-from-ui": "Grafana v13.0.1 (a100054f)",
-      "grafana.app/sourceChecksum": "65c92b76f94e8b4e9c6b542cc2c67574",
+      "grafana.app/sourceChecksum": "833605a5f7e227eff42d6d55d8f97360",
       "grafana.app/sourcePath": "/var/lib/grafana/dashboards/mmr-v2.json",
-      "grafana.app/sourceTimestamp": "1776535830000",
+      "grafana.app/sourceTimestamp": "1776537399000",
       "grafana.app/updatedBy": "anonymous:0",
-      "grafana.app/updatedTimestamp": "2026-04-18T18:15:44Z"
+      "grafana.app/updatedTimestamp": "2026-04-18T18:39:15Z"
     }
   },
   "spec": {
@@ -1268,8 +1268,8 @@
                       {
                         "id": "color",
                         "value": {
-                          "mode": "fixed",
-                          "fixedColor": "#d9d9d9"
+                          "fixedColor": "#d9d9d9",
+                          "mode": "fixed"
                         }
                       }
                     ]
@@ -1283,8 +1283,8 @@
                       {
                         "id": "color",
                         "value": {
-                          "mode": "fixed",
-                          "fixedColor": "#3f6fb3"
+                          "fixedColor": "#3f6fb3",
+                          "mode": "fixed"
                         }
                       }
                     ]
@@ -1298,8 +1298,8 @@
                       {
                         "id": "color",
                         "value": {
-                          "mode": "fixed",
-                          "fixedColor": "#5ca53f"
+                          "fixedColor": "#5ca53f",
+                          "mode": "fixed"
                         }
                       }
                     ]
@@ -1313,8 +1313,8 @@
                       {
                         "id": "color",
                         "value": {
-                          "mode": "fixed",
-                          "fixedColor": "#d4a62a"
+                          "fixedColor": "#d4a62a",
+                          "mode": "fixed"
                         }
                       }
                     ]
@@ -1328,8 +1328,8 @@
                       {
                         "id": "color",
                         "value": {
-                          "mode": "fixed",
-                          "fixedColor": "#8b3d8a"
+                          "fixedColor": "#8b3d8a",
+                          "mode": "fixed"
                         }
                       }
                     ]
@@ -1343,8 +1343,8 @@
                       {
                         "id": "color",
                         "value": {
-                          "mode": "fixed",
-                          "fixedColor": "#c2641d"
+                          "fixedColor": "#c2641d",
+                          "mode": "fixed"
                         }
                       }
                     ]
@@ -1476,8 +1476,8 @@
                       {
                         "id": "color",
                         "value": {
-                          "mode": "fixed",
-                          "fixedColor": "#d9d9d9"
+                          "fixedColor": "#d9d9d9",
+                          "mode": "fixed"
                         }
                       }
                     ]
@@ -1491,8 +1491,8 @@
                       {
                         "id": "color",
                         "value": {
-                          "mode": "fixed",
-                          "fixedColor": "#3f6fb3"
+                          "fixedColor": "#3f6fb3",
+                          "mode": "fixed"
                         }
                       }
                     ]
@@ -1506,8 +1506,8 @@
                       {
                         "id": "color",
                         "value": {
-                          "mode": "fixed",
-                          "fixedColor": "#5ca53f"
+                          "fixedColor": "#5ca53f",
+                          "mode": "fixed"
                         }
                       }
                     ]
@@ -1521,8 +1521,8 @@
                       {
                         "id": "color",
                         "value": {
-                          "mode": "fixed",
-                          "fixedColor": "#d4a62a"
+                          "fixedColor": "#d4a62a",
+                          "mode": "fixed"
                         }
                       }
                     ]
@@ -1536,8 +1536,8 @@
                       {
                         "id": "color",
                         "value": {
-                          "mode": "fixed",
-                          "fixedColor": "#8b3d8a"
+                          "fixedColor": "#8b3d8a",
+                          "mode": "fixed"
                         }
                       }
                     ]
@@ -1551,8 +1551,8 @@
                       {
                         "id": "color",
                         "value": {
-                          "mode": "fixed",
-                          "fixedColor": "#c2641d"
+                          "fixedColor": "#c2641d",
+                          "mode": "fixed"
                         }
                       }
                     ]
@@ -2199,7 +2199,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.1.0-24496757627",
+            "version": "13.0.1",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -2285,7 +2285,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.1.0-24496757627",
+            "version": "13.0.1",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -2375,7 +2375,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.1.0-24496757627",
+            "version": "13.0.1",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -2457,7 +2457,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.1.0-24496757627",
+            "version": "13.0.1",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -2544,7 +2544,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "timeseries",
-            "version": "13.1.0-24496757627",
+            "version": "13.0.1",
             "spec": {
               "options": {
                 "annotations": {
@@ -2661,7 +2661,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "timeseries",
-            "version": "13.1.0-24496757627",
+            "version": "13.0.1",
             "spec": {
               "options": {
                 "annotations": {
@@ -2779,7 +2779,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "heatmap",
-            "version": "13.1.0-24496757627",
+            "version": "13.0.1",
             "spec": {
               "options": {
                 "annotations": {
@@ -2864,7 +2864,7 @@
                         "name": "Mimir"
                       },
                       "spec": {
-                        "expr": "topk(8, round(sum by (song_title) (increase(itgmania_song_plays_count_total{instance=~\"$instance\"}[$__range]))))",
+                        "expr": "topk(8, clamp_min(sum by (song_title) (itgmania_song_plays_count_total{instance=~\"$instance\"}) - ((sum by (song_title) (itgmania_song_plays_count_total{instance=~\"$instance\"} offset $__range)) or on(song_title) (sum by (song_title) (itgmania_song_plays_count_total{instance=~\"$instance\"}) * 0)), 0))",
                         "format": "table",
                         "instant": true,
                         "range": false
@@ -2917,18 +2917,10 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "table",
-            "version": "13.1.0-24496757627",
+            "version": "13.0.1",
             "spec": {
               "options": {
                 "cellHeight": "sm",
-                "footer": {
-                  "countRows": false,
-                  "fields": "",
-                  "reducer": [
-                    "sum"
-                  ],
-                  "show": false
-                },
                 "showHeader": true
               },
               "fieldConfig": {
@@ -2952,6 +2944,9 @@
                       "type": "auto"
                     },
                     "filterable": false,
+                    "footer": {
+                      "reducers": []
+                    },
                     "inspect": false
                   }
                 },
@@ -3036,7 +3031,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "barchart",
-            "version": "13.1.0-24496757627",
+            "version": "13.0.1",
             "spec": {
               "options": {
                 "barRadius": 0,
@@ -3113,8 +3108,8 @@
                       {
                         "id": "color",
                         "value": {
-                          "mode": "fixed",
-                          "fixedColor": "#d9d9d9"
+                          "fixedColor": "#d9d9d9",
+                          "mode": "fixed"
                         }
                       }
                     ]
@@ -3128,8 +3123,8 @@
                       {
                         "id": "color",
                         "value": {
-                          "mode": "fixed",
-                          "fixedColor": "#3f6fb3"
+                          "fixedColor": "#3f6fb3",
+                          "mode": "fixed"
                         }
                       }
                     ]
@@ -3143,8 +3138,8 @@
                       {
                         "id": "color",
                         "value": {
-                          "mode": "fixed",
-                          "fixedColor": "#5ca53f"
+                          "fixedColor": "#5ca53f",
+                          "mode": "fixed"
                         }
                       }
                     ]
@@ -3158,8 +3153,8 @@
                       {
                         "id": "color",
                         "value": {
-                          "mode": "fixed",
-                          "fixedColor": "#d4a62a"
+                          "fixedColor": "#d4a62a",
+                          "mode": "fixed"
                         }
                       }
                     ]
@@ -3173,8 +3168,8 @@
                       {
                         "id": "color",
                         "value": {
-                          "mode": "fixed",
-                          "fixedColor": "#8b3d8a"
+                          "fixedColor": "#8b3d8a",
+                          "mode": "fixed"
                         }
                       }
                     ]
@@ -3188,8 +3183,8 @@
                       {
                         "id": "color",
                         "value": {
-                          "mode": "fixed",
-                          "fixedColor": "#c2641d"
+                          "fixedColor": "#c2641d",
+                          "mode": "fixed"
                         }
                       }
                     ]
@@ -3257,7 +3252,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "timeseries",
-            "version": "13.1.0-24496757627",
+            "version": "13.0.1",
             "spec": {
               "options": {
                 "annotations": {
@@ -3420,7 +3415,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "table",
-            "version": "13.1.0-24496757627",
+            "version": "13.0.1",
             "spec": {
               "options": {
                 "cellHeight": "sm",
@@ -3620,7 +3615,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.1.0-24496757627",
+            "version": "13.0.1",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -3706,13 +3701,14 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.1.0-24442936553",
+            "version": "13.0.1",
             "spec": {
               "options": {
                 "colorMode": "background",
                 "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "auto",
+                "percentChangeColorMode": "standard",
                 "reduceOptions": {
                   "calcs": [
                     "lastNotNull"
@@ -3720,6 +3716,7 @@
                   "fields": "",
                   "values": false
                 },
+                "showPercentChange": false,
                 "textMode": "auto",
                 "wideLayout": true
               },
@@ -3790,7 +3787,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.1.0-24496757627",
+            "version": "13.0.1",
             "spec": {
               "options": {
                 "colorMode": "background",
@@ -3876,13 +3873,14 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "stat",
-            "version": "13.1.0-24442936553",
+            "version": "13.0.1",
             "spec": {
               "options": {
                 "colorMode": "background",
                 "graphMode": "area",
                 "justifyMode": "auto",
                 "orientation": "auto",
+                "percentChangeColorMode": "standard",
                 "reduceOptions": {
                   "calcs": [
                     "lastNotNull"
@@ -3890,6 +3888,7 @@
                   "fields": "",
                   "values": false
                 },
+                "showPercentChange": false,
                 "textMode": "auto",
                 "wideLayout": true
               },
@@ -3972,7 +3971,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "timeseries",
-            "version": "13.1.0-24496757627",
+            "version": "13.0.1",
             "spec": {
               "options": {
                 "annotations": {
@@ -4090,7 +4089,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "heatmap",
-            "version": "13.1.0-24496757627",
+            "version": "13.0.1",
             "spec": {
               "options": {
                 "annotations": {
@@ -4194,7 +4193,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "table",
-            "version": "13.1.0-24496757627",
+            "version": "13.0.1",
             "spec": {
               "options": {
                 "cellHeight": "sm",
@@ -4270,7 +4269,7 @@
           "vizConfig": {
             "kind": "VizConfig",
             "group": "logs",
-            "version": "13.1.0-24496757627",
+            "version": "13.0.1",
             "spec": {
               "options": {
                 "dedupStrategy": "none",
@@ -4445,7 +4444,7 @@
                       "spec": {
                         "x": 12,
                         "y": 21,
-                        "width": 8,
+                        "width": 12,
                         "height": 8,
                         "element": {
                           "kind": "ElementReference",
@@ -4471,7 +4470,7 @@
                       "spec": {
                         "x": 12,
                         "y": 29,
-                        "width": 8,
+                        "width": 12,
                         "height": 8,
                         "element": {
                           "kind": "ElementReference",
@@ -4498,7 +4497,7 @@
                         "x": 16,
                         "y": 37,
                         "width": 8,
-                        "height": 7,
+                        "height": 8,
                         "element": {
                           "kind": "ElementReference",
                           "name": "panel-217"
@@ -4560,6 +4559,19 @@
                     {
                       "kind": "GridLayoutItem",
                       "spec": {
+                        "x": 6,
+                        "y": 0,
+                        "width": 6,
+                        "height": 5,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-302"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
                         "x": 12,
                         "y": 0,
                         "width": 6,
@@ -4567,6 +4579,19 @@
                         "element": {
                           "kind": "ElementReference",
                           "name": "panel-303"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 18,
+                        "y": 0,
+                        "width": 6,
+                        "height": 5,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-304"
                         }
                       }
                     },
@@ -4647,32 +4672,6 @@
                           "name": "panel-310"
                         }
                       }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "x": 6,
-                        "y": 29,
-                        "width": 6,
-                        "height": 5,
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-302"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "x": 18,
-                        "y": 29,
-                        "width": 6,
-                        "height": 5,
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-304"
-                        }
-                      }
                     }
                   ]
                 }
@@ -4742,13 +4741,39 @@
                     {
                       "kind": "GridLayoutItem",
                       "spec": {
-                        "x": 12,
+                        "x": 6,
                         "y": 0,
                         "width": 6,
                         "height": 5,
                         "element": {
                           "kind": "ElementReference",
                           "name": "panel-603"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 12,
+                        "y": 0,
+                        "width": 6,
+                        "height": 5,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-602"
+                        }
+                      }
+                    },
+                    {
+                      "kind": "GridLayoutItem",
+                      "spec": {
+                        "x": 18,
+                        "y": 0,
+                        "width": 6,
+                        "height": 5,
+                        "element": {
+                          "kind": "ElementReference",
+                          "name": "panel-604"
                         }
                       }
                     },
@@ -4801,32 +4826,6 @@
                         "element": {
                           "kind": "ElementReference",
                           "name": "panel-608"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "x": 6,
-                        "y": 23,
-                        "width": 6,
-                        "height": 5,
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-602"
-                        }
-                      }
-                    },
-                    {
-                      "kind": "GridLayoutItem",
-                      "spec": {
-                        "x": 18,
-                        "y": 23,
-                        "width": 6,
-                        "height": 5,
-                        "element": {
-                          "kind": "ElementReference",
-                          "name": "panel-604"
                         }
                       }
                     }
