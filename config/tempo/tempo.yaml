@@ -12,27 +12,18 @@ distributor:
         http:
           endpoint: "0.0.0.0:4318"
 
-ingester:
-  # Flush trace data to the metrics generator as blocks become available so
-  # TraceQL metrics queries (e.g. "Best Score Over Time") can see recent data.
-  flush_check_period: 10s
-
+# Tempo 3.0 removed the `ingester` block, the `local-blocks` processor and
+# `metrics_generator.traces_storage`. TraceQL metrics queries (e.g. the
+# "Best Score Over Time" panel) are now served natively by the live-store
+# against recent trace data, so no processor needs to be enabled for them.
+#
+# This block is inert until a processor (span-metrics, service-graphs) is
+# enabled via `overrides.defaults.metrics_generator.processors`; it is kept
+# so remote-write settings are already in place if one is turned on.
 metrics_generator:
-  processor:
-    local_blocks:
-      # Enables TraceQL metric queries (rate/max_over_time/etc.) against
-      # recent trace data without needing an external metrics store.
-      flush_to_storage: true
   storage:
     path: /tmp/tempo/generator/wal
     remote_write_flush_deadline: 1m
-  traces_storage:
-    path: /tmp/tempo/generator/traces
-
-overrides:
-  defaults:
-    metrics_generator:
-      processors: [local-blocks]
 
 storage:
   trace:

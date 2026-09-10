@@ -6,7 +6,7 @@ include:
 
 services:
   alloy:
-    image: grafana/alloy:v1.12.1
+    image: grafana/alloy:v1.19.2
     pull_policy: always
     restart: on-failure
     volumes:
